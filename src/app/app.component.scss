@@ -1,0 +1,16 @@
+.home {
+  padding: 20px;
+
+  .nav-item {
+    margin-bottom: 10px;
+    cursor: pointer;
+    height: 100px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.router-animation-overlay {
+  position: absolute;
+  opacity: 0.5;
+}
