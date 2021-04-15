@@ -108,9 +108,6 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
     this.routerAnimationOverlay!.nativeElement.style.width = `${width}px`;
     this.routerAnimationOverlay!.nativeElement.style.height = `${height}px`;
     this.routerAnimationService.playAnimation(cb);
-    setTimeout(() => {
-      this.routerAnimationService.closeOverlay();
-    }, 3000);
   }
 }
 
