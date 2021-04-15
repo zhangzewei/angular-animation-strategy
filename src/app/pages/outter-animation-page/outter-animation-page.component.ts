@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RouterAnimationService } from 'src/app/services/router-animation.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { RouterAnimationService } from 'src/app/services/router-animation.servic
 export class OutterAnimationPageComponent implements OnInit {
 
   constructor(
-    private router: Router,
     private routerAnimationService: RouterAnimationService,
   ) { }
 
@@ -18,10 +16,6 @@ export class OutterAnimationPageComponent implements OnInit {
     // 模拟网络请求延迟
     setTimeout(() => {
       this.routerAnimationService.closeOverlay();
-    }, 3000);
-  }
-
-  back() {
-    this.router.navigate(['/']);
+    }, 1000);
   }
 }

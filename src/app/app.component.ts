@@ -4,6 +4,12 @@ import { BehaviorSubject } from 'rxjs';
 import { slideInOutAnimation, expandtAnimation } from './animations';
 import { RouterAnimationService } from './services/router-animation.service';
 
+interface OverlayPosition {
+  left: number,
+  top: number,
+  width: number,
+  height: number
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +28,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
       path: '/outter-animation', name: '全局遮盖动画效果的页面', color: '#00e5ff'
     },
     {
-      path: '/outter-animation', name: '全局遮盖动画效果的页面', color: '#ffa726'
+      path: '/mo-practice', name: 'Mo.js 动画效果的页面', color: '#ffa726'
     },
     {
       path: '/outter-animation', name: '全局遮盖动画效果的页面', color: '#1de9b6'
@@ -91,17 +97,16 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
     return this.router.navigate([path]);
   }
 
-  playRouterOverlayAnimation(color: string, {
-    left,
-    top,
-    width,
-    height
-  }: {
-    left: number,
-    top: number,
-    width: number,
-    height: number
-  }, cb: any) {
+  playRouterOverlayAnimation(
+    color: string,
+    {
+      left,
+      top,
+      width,
+      height
+    }: OverlayPosition,
+    cb: () => void
+  ) {
     this.routerAnimationOverlay!.nativeElement.style.backgroundColor = color;
     this.routerAnimationOverlay!.nativeElement.style.left = `${left}px`;
     this.routerAnimationOverlay!.nativeElement.style.top = `${top}px`;

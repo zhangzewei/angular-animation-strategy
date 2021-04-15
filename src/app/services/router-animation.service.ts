@@ -25,9 +25,7 @@ export class RouterAnimationService {
         this.routerAnimationSubject.next(this.routerAnimationStatus);
       }),
       delay(300),
-      tap(() => {
-        cb();
-      })
+      tap(() => cb())
     ).subscribe();
   }
 
@@ -35,6 +33,7 @@ export class RouterAnimationService {
     new Observable(subscriber => {
       subscriber.next();
     }).pipe(
+      delay(300),
       tap(() => {
         this.routerAnimationStatus = "end";
         this.routerAnimationSubject.next(this.routerAnimationStatus);
