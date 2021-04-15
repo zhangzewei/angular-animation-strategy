@@ -1,22 +1,16 @@
-import { Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { slideInOutAnimation, expandtAnimation } from './animations';
-import { RouterAnimationService } from './services/router-animation.service';
+import { OverlayStyleConfig, RouterAnimationService } from './services/router-animation.service';
 
-interface OverlayPosition {
-  left: number,
-  top: number,
-  width: number,
-  height: number
-}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [slideInOutAnimation, expandtAnimation]
 })
-export class AppComponent implements OnInit, DoCheck, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
   title = 'angular-animation-strategy';
   needMenu = true;
   expandAnimationName: string | undefined;
@@ -50,6 +44,10 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
     this.routerAnimationStatusSubject.subscribe((status) => {
       this.expandAnimationName = status;
     });
+  }
+
+  ngAfterViewInit() {
+    this.routerAnimationService.setOverlayEle(this.routerAnimationOverlay);
   }
 
   ngDoCheck() {
@@ -87,7 +85,8 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   goToPage(path: string, color?: string, $event?: any) {
     if (color) {
       const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = $event?.target;
-      return this.playRouterOverlayAnimation(color, {
+      return this.playRouterOverlayAnimation({
+        color,
         left: offsetLeft,
         top: offsetTop,
         width: offsetWidth,
@@ -98,21 +97,10 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   playRouterOverlayAnimation(
-    color: string,
-    {
-      left,
-      top,
-      width,
-      height
-    }: OverlayPosition,
+    overlayStyleConfig: OverlayStyleConfig,
     cb: () => void
   ) {
-    this.routerAnimationOverlay!.nativeElement.style.backgroundColor = color;
-    this.routerAnimationOverlay!.nativeElement.style.left = `${left}px`;
-    this.routerAnimationOverlay!.nativeElement.style.top = `${top}px`;
-    this.routerAnimationOverlay!.nativeElement.style.width = `${width}px`;
-    this.routerAnimationOverlay!.nativeElement.style.height = `${height}px`;
-    this.routerAnimationService.playAnimation(cb);
+    this.routerAnimationService.playAnimation(overlayStyleConfig, cb);
   }
 }
 
