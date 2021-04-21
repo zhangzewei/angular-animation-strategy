@@ -18,10 +18,10 @@ export class HeadComponent {
     this.routerAnimationService.playBackAnimation(
       {
         color: '#004d40',
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '0',
       },
       () => this.router.navigate(['/']));
   }

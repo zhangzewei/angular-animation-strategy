@@ -12,10 +12,10 @@ import { ROUTER_ANIMATION_STATUS } from '../../animations';
 
 export interface OverlayStyleConfig {
   color: string,
-  left: number,
-  top: number,
-  width: number,
-  height: number
+  left: string,
+  top: string,
+  width: string,
+  height: string
 }
 
 @Injectable({
@@ -93,10 +93,9 @@ export class RouterAnimationService {
     }).pipe(
       tap(() => this.setAnimationName(ROUTER_ANIMATION_STATUS.startLeavingPage)),
       delay(300),
-      tap(() => {
-        cb();
-        this.closeBackAnimation();
-      })
+      tap(() => { cb(); }),
+      delay(300),
+      tap(() => { this.closeBackAnimation(); }),
     ).subscribe();
   }
 

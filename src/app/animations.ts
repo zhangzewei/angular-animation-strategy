@@ -71,8 +71,10 @@ export const expandtAnimation =
       opacity: 1
     })),
     state(ROUTER_ANIMATION_STATUS.leftPage, style({
-      height: 0,
+      height: '100%',
       width: '100%',
+      opacity: 1,
+      transform: 'translateY(100%)'
     })),
     transition(`* => ${ROUTER_ANIMATION_STATUS.expanding}`, [
       animate('300ms ease-out'),

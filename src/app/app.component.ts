@@ -11,10 +11,9 @@ import { OverlayStyleConfig, RouterAnimationService } from './components/router-
   styleUrls: ['./app.component.scss'],
   animations: [slideInOutAnimation]
 })
-export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
+export class AppComponent implements DoCheck, AfterViewInit {
   title = 'angular-animation-strategy';
   needMenu = true;
-  expandAnimationName: string | undefined;
   routeConfig = [
     {
       path: '/inner-animation', name: '自身带有动画效果的页面',
@@ -29,7 +28,6 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
       path: '/outter-animation', name: '全局遮盖动画效果的页面', color: '#1de9b6'
     },
   ];
-  routerAnimationStatusSubject: BehaviorSubject<string>;
 
   @ViewChild('routerOutlet') routerOutlet: any;
 
@@ -37,15 +35,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
     private router: Router,
     private routerAnimationService: RouterAnimationService,
     public viewContainerRef: ViewContainerRef
-  ) {
-    this.routerAnimationStatusSubject = this.routerAnimationService.getBehaviorSubject();
-  }
-
-  ngOnInit() {
-    this.routerAnimationStatusSubject.subscribe((status) => {
-      this.expandAnimationName = status;
-    });
-  }
+  ) { }
 
   ngAfterViewInit() {
     this.routerAnimationService.setRootViewContainerRef(this.viewContainerRef);
@@ -66,10 +56,6 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
     }
   }
 
-  ngOnDestroy() {
-    this.routerAnimationStatusSubject.unsubscribe();
-  }
-
   setStyle(color?: string) {
     if (color) {
       return {
@@ -88,10 +74,10 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
       const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = $event?.target;
       return this.playRouterOverlayAnimation({
         color,
-        left: offsetLeft,
-        top: offsetTop,
-        width: offsetWidth,
-        height: offsetHeight
+        left: `${offsetLeft}px`,
+        top: `${offsetTop}px`,
+        width: `${offsetWidth}px`,
+        height: `${offsetHeight}px`
       }, () => this.router.navigate([path]));
     }
     return this.router.navigate([path]);

@@ -1,5 +1,6 @@
-import { AfterViewInit, ElementRef, Input, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ElementRef, Input, OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { expandtAnimation } from 'src/app/animations';
 import { OverlayStyleConfig, RouterAnimationService } from './router-animation.service';
 
@@ -15,10 +16,17 @@ export class RouterOverlayComponent implements OnInit, AfterViewInit {
   };
   @ViewChild('routerAnimationOverlay') routerAnimationOverlayEle!: ElementRef<HTMLElement>;
   expandAnimationName: string | undefined;
-  constructor() { }
+  routerAnimationStatusSubject: BehaviorSubject<string>;
+  constructor(
+    private routerAnimationService: RouterAnimationService,
+  ) {
+    this.routerAnimationStatusSubject = this.routerAnimationService.getBehaviorSubject();;
+  }
 
   ngOnInit() {
-    this.expandAnimationName = '';
+    this.routerAnimationStatusSubject?.subscribe((status) => {
+      this.expandAnimationName = status;
+    });
   }
 
   ngAfterViewInit() {
@@ -33,10 +41,10 @@ export class RouterOverlayComponent implements OnInit, AfterViewInit {
     elementRef: ElementRef<HTMLElement>
   ) {
     elementRef.nativeElement.style.backgroundColor = color;
-    elementRef.nativeElement.style.left = `${left}px`;
-    elementRef.nativeElement.style.top = `${top}px`;
-    elementRef.nativeElement.style.width = `${width}px`;
-    elementRef.nativeElement.style.height = `${height}px`;
+    elementRef.nativeElement.style.left = left;
+    elementRef.nativeElement.style.top = top;
+    elementRef.nativeElement.style.width = width;
+    elementRef.nativeElement.style.height = height;
   }
 
 }
