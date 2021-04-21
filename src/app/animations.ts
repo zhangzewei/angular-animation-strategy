@@ -3,6 +3,14 @@ import {
   transition, animate, style, query, state
 } from '@angular/animations';
 
+export const ROUTER_ANIMATION_STATUS = {
+  standBy: 'stand-by',
+  expanding: 'expanding',
+  expandEnd: 'expand-end',
+  startLeavingPage: 'start-leaving-page',
+  leavingPage: 'leaving-page',
+  leftPage: 'left-page'
+}
 
 export const slideInOutAnimation =
   trigger('routeAnimation', [
@@ -35,10 +43,13 @@ export const slideInOutAnimation =
 
 export const expandtAnimation =
   trigger('outterRouteAnimation', [
-    state('start', style({
-      opacity: 0.5,
+    state(ROUTER_ANIMATION_STATUS.standBy, style({
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0,
     })),
-    state('expand', style({
+    state(ROUTER_ANIMATION_STATUS.expanding, style({
       opacity: 1,
       height: '100%',
       width: '100%',
@@ -46,17 +57,33 @@ export const expandtAnimation =
       left: 0,
       top: 0,
     })),
-    state('end', style({
+    state(ROUTER_ANIMATION_STATUS.expandEnd, style({
       opacity: 0,
       height: '100%',
       width: '100%',
       left: 0,
       top: 0,
     })),
-    transition('start => expand', [
+    state(ROUTER_ANIMATION_STATUS.startLeavingPage, style({
+      height: '100%',
+      width: '100%',
+      transformOrigin: 'center top',
+      opacity: 1
+    })),
+    state(ROUTER_ANIMATION_STATUS.leftPage, style({
+      height: 0,
+      width: '100%',
+    })),
+    transition(`* => ${ROUTER_ANIMATION_STATUS.expanding}`, [
       animate('300ms ease-out'),
     ]),
-    transition('expand => end', [
+    transition(`${ROUTER_ANIMATION_STATUS.expanding} => ${ROUTER_ANIMATION_STATUS.expandEnd}`, [
+      animate('300ms ease-out'),
+    ]),
+    transition(`* => ${ROUTER_ANIMATION_STATUS.startLeavingPage}`, [
+      animate('300ms ease-out'),
+    ]),
+    transition(`${ROUTER_ANIMATION_STATUS.startLeavingPage} => ${ROUTER_ANIMATION_STATUS.leftPage}`, [
       animate('300ms ease-out'),
     ]),
   ]);

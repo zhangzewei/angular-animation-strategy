@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterAnimationService } from 'src/app/services/router-animation.service';
+import { RouterAnimationService } from 'src/app/components/router-overlay/router-animation.service';
 
 @Component({
   selector: 'app-outter-animation-page',
@@ -15,7 +15,7 @@ export class OutterAnimationPageComponent implements OnInit {
   ngOnInit() {
     // 模拟网络请求延迟
     setTimeout(() => {
-      this.routerAnimationService.closeOverlay();
+      this.routerAnimationService.closeExpandingOverlay();
     }, 1000);
   }
 }

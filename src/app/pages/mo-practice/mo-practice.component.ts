@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import mojs from '@mojs/core'
-import { RouterAnimationService } from 'src/app/services/router-animation.service';
+import { RouterAnimationService } from 'src/app/components/router-overlay/router-animation.service';
 
 @Component({
   selector: 'app-mo-practice',
@@ -14,7 +14,7 @@ export class MoPracticeComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.routerAnimationService.closeOverlay();
+    this.routerAnimationService.closeExpandingOverlay();
   }
 
   ngAfterViewInit() {

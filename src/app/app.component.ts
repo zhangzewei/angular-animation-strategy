@@ -1,16 +1,17 @@
+import { ViewContainerRef } from '@angular/core';
 import { AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { slideInOutAnimation, expandtAnimation } from './animations';
-import { OverlayStyleConfig, RouterAnimationService } from './services/router-animation.service';
+import { slideInOutAnimation } from './animations';
+import { OverlayStyleConfig, RouterAnimationService } from './components/router-overlay/router-animation.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [slideInOutAnimation, expandtAnimation]
+  animations: [slideInOutAnimation]
 })
-export class AppComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
+export class AppComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
   title = 'angular-animation-strategy';
   needMenu = true;
   expandAnimationName: string | undefined;
@@ -31,11 +32,11 @@ export class AppComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
   routerAnimationStatusSubject: BehaviorSubject<string>;
 
   @ViewChild('routerOutlet') routerOutlet: any;
-  @ViewChild('routerAnimationOverlay') routerAnimationOverlay?: ElementRef<HTMLElement>;
 
   constructor(
     private router: Router,
     private routerAnimationService: RouterAnimationService,
+    public viewContainerRef: ViewContainerRef
   ) {
     this.routerAnimationStatusSubject = this.routerAnimationService.getBehaviorSubject();
   }
@@ -47,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.routerAnimationService.setOverlayEle(this.routerAnimationOverlay);
+    this.routerAnimationService.setRootViewContainerRef(this.viewContainerRef);
   }
 
   ngDoCheck() {
@@ -100,7 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
     overlayStyleConfig: OverlayStyleConfig,
     cb: () => void
   ) {
-    this.routerAnimationService.playAnimation(overlayStyleConfig, cb);
+    this.routerAnimationService.playExpadingAnimation(overlayStyleConfig, cb);
   }
 }
 
