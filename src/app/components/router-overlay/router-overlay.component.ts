@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, ElementRef, Input } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { expandtAnimation } from 'src/app/animations';
@@ -20,11 +20,11 @@ export class RouterOverlayComponent implements OnInit, AfterViewInit {
   constructor(
     private routerAnimationService: RouterAnimationService,
   ) {
-    this.routerAnimationStatusSubject = this.routerAnimationService.getBehaviorSubject();;
+    this.routerAnimationStatusSubject = this.routerAnimationService.getBehaviorSubject();
   }
 
   ngOnInit() {
-    this.routerAnimationStatusSubject?.subscribe((status) => {
+    this.routerAnimationStatusSubject.subscribe((status) => {
       this.expandAnimationName = status;
     });
   }
@@ -46,5 +46,4 @@ export class RouterOverlayComponent implements OnInit, AfterViewInit {
     elementRef.nativeElement.style.width = width;
     elementRef.nativeElement.style.height = height;
   }
-
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ROUTER_ANIMATION_STATUS } from 'src/app/animations';
 import { RouterAnimationService } from 'src/app/components/router-overlay/router-animation.service';
 
 @Component({

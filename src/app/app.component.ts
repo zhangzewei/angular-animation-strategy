@@ -1,7 +1,6 @@
 import { ViewContainerRef } from '@angular/core';
-import { AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { slideInOutAnimation } from './animations';
 import { OverlayStyleConfig, RouterAnimationService } from './components/router-overlay/router-animation.service';
 

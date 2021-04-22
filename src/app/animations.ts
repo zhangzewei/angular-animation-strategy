@@ -4,7 +4,6 @@ import {
 } from '@angular/animations';
 
 export const ROUTER_ANIMATION_STATUS = {
-  standBy: 'stand-by',
   expanding: 'expanding',
   expandEnd: 'expand-end',
   startLeavingPage: 'start-leaving-page',
@@ -43,12 +42,6 @@ export const slideInOutAnimation =
 
 export const expandtAnimation =
   trigger('outterRouteAnimation', [
-    state(ROUTER_ANIMATION_STATUS.standBy, style({
-      top: 0,
-      left: 0,
-      width: 0,
-      height: 0,
-    })),
     state(ROUTER_ANIMATION_STATUS.expanding, style({
       opacity: 1,
       height: '100%',
